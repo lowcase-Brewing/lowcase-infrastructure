@@ -1,0 +1,2 @@
+# Lambda supplies boto3. Local tests install it to check the same SDK interfaces.
+boto3>=1.40,<2

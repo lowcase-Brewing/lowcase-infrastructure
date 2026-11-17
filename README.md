@@ -2,7 +2,9 @@
 
 Terraform scaffolding for the Grain Bill Calculator proof of concept in the
 **lowcase Brewing** AWS project (`697731339425`), selected Region `us-east-2`.
-Application hosting resources have not been defined yet.
+The isolated recipe API POC is defined in `terraform/`; application hosting is not
+included yet. See [the POC runbook](poc/README.md) for Cognito sign-in, recipe save/load,
+two-user isolation testing and cleanup.
 
 ## Remote state
 
@@ -26,8 +28,11 @@ remains in configuration. Keep the state bucket when tearing down the POC.
 
 ## Prerequisites
 
-- Terraform **1.10 or later**, below 2.0, for native S3 state locking. Prefer a current
-  stable release from the [official install page](https://developer.hashicorp.com/terraform/install).
+- Terraform **1.15 or later**, below 2.0, for native `aws login` authentication in
+  the S3 backend. Native S3 locking alone only requires 1.10. This repository pins
+  **1.17.2** in `.terraform-version` for version managers such as `tenv`.
+  See the [official install page](https://developer.hashicorp.com/terraform/install)
+  and [Terraform 1.15 release notes](https://github.com/hashicorp/terraform/blob/v1.15.0/CHANGELOG.md).
 - AWS CLI and the existing authenticated `lowcase` profile. If its session expires,
   renew it through browser-based AWS login.
 - Confirm the selected Region in **AWS Settings > View all projects > lowcase Brewing >
@@ -40,6 +45,21 @@ the provider and the backend without putting credentials in configuration:
 export AWS_PROFILE=lowcase
 export AWS_REGION=us-east-2
 ```
+
+If you previously exported temporary access keys into the terminal, remove those
+overrides so Terraform can use and refresh the `lowcase` login session:
+
+```sh
+unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN AWS_SECURITY_TOKEN
+terraform version
+```
+
+The version should be 1.17.2 with the repository pin, or at least 1.15 with another
+installation. An `ExpiredToken` error during backend initialization can come from
+expired environment credentials even while the named login profile still works.
+If the profile's overall login session has expired, renew it through browser-based
+AWS login before retrying. Keep local bootstrap state and its backup until migration
+has succeeded; authentication failures do not require recreating the bucket.
 
 ## 1. Bootstrap the bucket
 
@@ -92,9 +112,11 @@ terraform -chdir=terraform validate
 terraform -chdir=terraform plan
 ```
 
-The application root currently has no resources, so its plan should have no resource
-changes. Its backend uses a different state key from the bootstrap module.
-`s3.tf` and `lambda.tf` remain placeholders for later hosting work.
+The application root defines the isolated Cognito, API Gateway, Lambda and DynamoDB
+recipe POC. Its plan should add only POC resources, never replace the bootstrap
+bucket. Its backend uses a different state key from the bootstrap module.
+Follow [the POC runbook](poc/README.md) before applying. `s3.tf` remains a placeholder
+for later application hosting; the local browser harness requires no hosting bucket.
 
 ## Validation without creating infrastructure
 

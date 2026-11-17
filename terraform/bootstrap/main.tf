@@ -1,7 +1,7 @@
 # This independent root module creates the remote-state bucket.
 # Its first apply uses local state; see README.md for the migration step.
 terraform {
-  required_version = ">= 1.10.0, < 2.0.0"
+  required_version = ">= 1.15.0, < 2.0.0"
 
   required_providers {
     aws = {

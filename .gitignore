@@ -1,0 +1,21 @@
+# Terraform working directories, local state, and saved plans may contain secrets.
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfplan
+tfplan
+plan.out
+crash.log
+crash.*.log
+*.tfvars
+*.tfvars.json
+!*.tfvars.example
+!*.tfvars.json.example
+.terraformrc
+terraform.rc
+
+# Commit .terraform.lock.hcl files to pin provider selections and checksums.
+.DS_Store
+__pycache__/
+*.pyc
+poc/web/config.json

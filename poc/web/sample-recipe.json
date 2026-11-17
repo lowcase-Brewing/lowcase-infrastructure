@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "recipe": {
+    "id": "poc-recipe-001",
+    "name": "POC Test Recipe",
+    "style": "Test Ale",
+    "version": "1.0.0",
+    "method": "all-grain",
+    "parameters": {
+      "coldFermenterGal": 5,
+      "efficiencyPct": 70,
+      "targetOG": 1.052,
+      "extractRecoveryPct": 90
+    },
+    "description": "Synthetic recipe for the isolated AWS POC.",
+    "notes": "No production data. Change this note, save, and load to verify persistence.",
+    "hopsNotes": "",
+    "yeastNotes": "",
+    "processNotes": "",
+    "grainBill": [
+      {
+        "id": "poc-row-001",
+        "ingredient": {
+          "libraryId": "poc-pale-malt",
+          "name": "POC Pale Malt",
+          "category": "Base",
+          "origin": "Test data",
+          "extractFraction": 0.84,
+          "ppg": 38.64,
+          "notes": "Frozen synthetic ingredient snapshot.",
+          "capturedAt": "2026-11-17T00:00:00Z"
+        },
+        "lb": "10",
+        "oz": "0"
+      }
+    ],
+    "grainBillSummary": null,
+    "createdAt": "2026-11-17T00:00:00Z",
+    "updatedAt": "2026-11-17T00:00:00Z"
+  }
+}

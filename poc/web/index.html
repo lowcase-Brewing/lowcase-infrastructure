@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self' https://*.amazoncognito.com https://*.amazonaws.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>lowcase Brewing · AWS recipe POC</title>
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./app.mjs"></script>
+</head>
+<body>
+  <main>
+    <p class="eyebrow">lowcase Brewing / infrastructure lab</p>
+    <h1>Recipe persistence POC</h1>
+    <p id="environment">Loading public POC configuration…</p>
+    <p>This test harness uses its own AWS users and data. The live calculator and Supabase are separate.</p>
+    <section aria-labelledby="signin-heading">
+      <h2 id="signin-heading">1. Sign in</h2>
+      <p id="session">Signed out. Use an administrator-created POC test user.</p>
+      <div class="actions"><button id="sign-in" disabled>Sign in with Cognito</button><button id="sign-out" disabled>Sign out</button></div>
+      <p class="hint">Access tokens stay in memory. After a page reload, sign in again before loading the recipe.</p>
+    </section>
+    <section aria-labelledby="recipe-heading">
+      <h2 id="recipe-heading">2. Save and load a recipe</h2>
+      <label for="recipe-id">Recipe ID</label>
+      <input id="recipe-id" value="poc-recipe-001" autocomplete="off">
+      <label for="recipe-json">Schema-versioned recipe document</label>
+      <textarea id="recipe-json" rows="20" spellcheck="false"></textarea>
+      <div class="actions"><button id="save" disabled>Save recipe</button><button id="load" disabled>Load recipe</button><button id="unauthenticated" disabled>Check unauthenticated request</button></div>
+    </section>
+    <section aria-labelledby="result-heading"><h2 id="result-heading">Result</h2><pre id="result" role="status" aria-live="polite">Generate config.json after applying the POC stack. See poc/README.md.</pre></section>
+  </main>
+</body>
+</html>
